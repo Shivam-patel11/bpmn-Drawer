@@ -29,7 +29,9 @@
               "node_modules/bpmn-js/dist/assets/bpmn-font/css/bpmn.css",
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [
+              "./node_modules/blueimp-canvas-to-blob/js/canvas-to-blob.js"
+            ]
           },
           "configurations": {
             "production": {

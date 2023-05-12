@@ -11,6 +11,7 @@ import {
   SimpleChanges,
   EventEmitter
 } from '@angular/core';
+import {saveAs} from 'file-saver';
 
 import { HttpClient } from '@angular/common/http';
 import { map, switchMap } from 'rxjs/operators';
@@ -21,7 +22,7 @@ import { from, Observable, Subscription } from 'rxjs';
 @Component({
   selector: 'app-comp',
   template: `
-    <div #ref class="diagram-container"></div>
+    <div #ref class="diagram-container" id="canvas"></div>
   `,
   styles: [
     `
