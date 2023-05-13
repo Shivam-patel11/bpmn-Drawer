@@ -1,3 +1,6 @@
-<p>parent works!</p>
-<button class="btn-btn primary" (click)="ngOnSave()">Download</button>
+
+<button class="btn-btn primary" (click)="this.downloadImageAsXml('http://localhost:4200/', 'image', '');
+">Download</button>
+<button (click)="downloadBpmnXml()">Download BPMN XML</button>
+
 <app-comp [url]="compUrl" (importDone)="handleImported($event)"></app-comp>

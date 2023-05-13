@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --open",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
@@ -21,6 +21,7 @@
     "@types/file-saver": "^2.0.5",
     "blueimp-canvas-to-blob": "^3.29.0",
     "bpmn-js": "^7.3.0",
+    "canvas-toBlob": "^1.0.0",
     "core-js": "^3.6.5",
     "file-saver": "^2.0.5",
     "rxjs": "~7.8.0",

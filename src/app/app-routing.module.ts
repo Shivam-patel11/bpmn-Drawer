@@ -5,6 +5,7 @@ import { CompComponent } from './comp/comp.component';
 import { HttpClientModule } from '@angular/common/http';
 import { HomeComponent } from './home/home.component';
 import { ParentComponent } from './parent/parent.component';
+import { EditComponent } from './edit/edit.component';
 
 const routes: Routes = [{
   path: '',
@@ -16,7 +17,13 @@ const routes: Routes = [{
   path:'new',
   component:ParentComponent, 
 
-}];
+},
+{
+  path:'edit',
+  component:EditComponent, 
+
+}
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

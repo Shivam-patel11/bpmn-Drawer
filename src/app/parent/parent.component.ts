@@ -1,24 +1,68 @@
 import { Component } from '@angular/core';
-import { saveAs } from 'file-saver';
+import * as FileSaver from 'file-saver';
+import { HttpClient } from '@angular/common/http';
+import BpmnJS from 'bpmn-js/dist/bpmn-modeler.production.min.js';
+
 @Component({
   selector: 'app-parent',
   templateUrl: './parent.component.html',
   styleUrls: ['./parent.component.css']
 })
 export class ParentComponent {
-  compUrl = 'https://cdn.staticaly.com/gh/bpmn-io/bpmn-js-examples/dfceecba/starter/diagram.bpmn';
+  
+  
+constructor(private http: HttpClient) {}
+  compUrl = './assets/create.xml';
 
   importError?: Error;
 
   handleImported(event: Event) {
 
   }
-  ngOnSave()
-  {
-    var canvas = document.getElementById("canvas") as HTMLCanvasElement;
-    canvas.toBlob(function(blob) {
-    saveAs(blob, "pretty image.png");
-});
-  }
 
+downloadImageAsXml(imageUrl: string, fileName: string, directoryPath: string): void {
+  this.http.get(imageUrl, { responseType: 'blob' })
+    .subscribe((blob: Blob) => {
+      const file = new File([blob], `${fileName}.xml`, { type: 'text/xml' });
+      FileSaver.saveAs(file, `${directoryPath}/${fileName}.xml`);
+    });
 }
+  bpmnData = '<bpmn ...></bpmn>';
+
+  downloadBpmnXml() {
+    generateBpmnXml(this.bpmnData);
+  }
+}
+function generateBpmnXml(bpmnData) {
+  const bpmnJS = new BpmnJS();
+  bpmnJS.importXML(bpmnData, (err) => {
+    if (err) {
+      console.error(err);
+    } else {
+      bpmnJS.saveXML((err, xml) => {
+        if (err) {
+          console.error(err);
+        } else {
+          const blob = new Blob([xml], {type: 'text/xml'});
+          const url = window.URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = 'bpmn.xml';
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+        }
+      });
+    }
+  });
+  bpmnXml: string = '...'; // Your BPMN XML
+
+  downloadBpmn() {
+    const blob = new Blob([this.bpmnXml], { type: 'application/xml' });
+    FileSaver.saveAs(blob, 'bpmn.xml');
+}
+
+
+
+
+
