@@ -18,21 +18,12 @@ import { map, switchMap } from 'rxjs/operators';
 import * as BpmnJS from 'bpmn-js/dist/bpmn-modeler.production.min.js';
 
 import { from, Observable, Subscription } from 'rxjs';
+import * as FileSaver from 'file-saver';
 
 @Component({
   selector: 'app-comp',
-  template: `
-    <div #ref class="diagram-container" id="canvas"></div>
-  `,
-  styles: [
-    `
-      .diagram-container {
-        height: 100%;
-        width: 100%;
-        position:absolute;
-      }
-    `
-  ]
+  templateUrl: './comp.component.html',
+  styleUrls: ['./comp.component.css']
 })
 export class CompComponent implements AfterContentInit, OnChanges, OnDestroy, OnInit {
 
@@ -104,5 +95,12 @@ export class CompComponent implements AfterContentInit, OnChanges, OnDestroy, On
    */
   private importDiagram(xml: string): Observable<{warnings: Array<any>}> {
     return from(this.bpmnJS.importXML(xml) as Promise<{warnings: Array<any>}>);
+  }
+
+  async saveXML() {
+    const { xml } =  await this.bpmnJS.saveXML({ format: true });
+    console.log(xml);
+    var blob = new Blob([xml], {type: "text/plain;charset=utf-8"});
+    FileSaver.saveAs(blob, 'diagram.bpmn');
   }
 }
